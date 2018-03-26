@@ -1,0 +1,36 @@
+PatternToNumber <- function (Pattern) {
+  k <- nchar(Pattern)
+  Pattern_string <- substring(Pattern, 1:k, 1:k)
+  Sum <- c()
+  for (i in 1:k) {
+    if (Pattern_string[i] == "A") {
+      Sum[i] = 0*4^(k-i)
+    } else if (Pattern_string[i] == "C"){
+      Sum[i] = 1*4^(k-i)
+    } else if (Pattern_string[i] == "G"){
+      Sum[i] = 2*4^(k-i)
+    } else if (Pattern_string[i] == "T"){
+      Sum[i] = 3*4^(k-i)
+    }
+  } 
+  return(sum(Sum))
+}
+
+ComputingFrequencies <- function ( Text , k ){
+  FrequencyArray <- c()
+  for (i in 0:(4^k-1)) {
+    FrequencyArray [i+1] <- 0
+  }
+  for (i in 0:(nchar(Text) - k)) {
+    Pattern <- substr (Text, i+1 , i+k)
+    j <- PatternToNumber (Pattern)
+    FrequencyArray [j+1] <- FrequencyArray[j+1] + 1
+  } 
+  return(FrequencyArray)
+}
+
+k<-ComputingFrequencies("TATCTGCTCCGGGTGGTATATAATCCGAGTTAGGCATCCCGGTCTATTAAGCAAGCATTCAGCGTCAGACGGCTCAGCGAGTGTGCGGACGTGAACTCAACGCGTTCTCCTACGTTAATCGGTCATGCCTCCGGACTAGTGAAAAAACAAGCACCCTCGTTACGTAGCCCCGAGAACTTGAACCTTTCCAAGTAGGAAGTATAAATAGGGTTAGTCAGTTCCGCCAAATTCTACACGACCATAGAACTCTACCGACCTACTTTCCCCCCATGTTGCCTAATGGCGTCTCTGGCCATTTCCCTCCCTCTTTCTGTGAAGGGTCCCTGTTGGACTGTCTGTAAGAAAGCCCGAGGATAGGACGGCGAGAGATGTTCGGATGAAAGCGCCATGTTTACTCAATAAGAAACCACTCAATGGGTCAAGGTCAGCCCTCGCAGGCGACTACCTAGATCTCGGGTCATTGGCAGGCACTTGGTTGTAGTAGCGGAACATCAGACCGAGCGGGTGTTACTTAAACCACTGCTGCGCAGTGATACAACATTGTAGGTGCAAGTGAAGCACAGTACGTTTGCAGTACCCCTTAGTAATTCGACAATGTGCAAGACTAGTTTATACAATTTGTCGATCCAAGCGGACCGGACGTATTTAGGTTATGCGCTAGAAAAGAAACCGATGCGAACCGCTGTGAGGGATTACGCAAGGCTCCTCTAATTTCAAAATCGCCAACATGAGGACTGGTTACCCTTATCATGACCGATGACGA",5)
+k_matrix <- matrix(k)
+write.table(k,"/Users/peter/Dropbox/Output3.0.txt",row.names = FALSE)
+
+
